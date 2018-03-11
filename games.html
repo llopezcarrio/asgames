@@ -1,0 +1,225 @@
+<script type="text/javascript">
+
+var sheetId="10b6fd-9zJytzx7u0VrCIiXUziu2OwlPN14bXblAkycM";
+var sheetNumber="0";
+
+</script>
+
+<div>
+<table id="tableResult" style="margin-left:auto; margin-right:auto;">
+  <tr>
+    <th style="text-align:center"><h1 id="Visitor"></h1></th>
+    <th style="text-align:center"><h2 >vs</h2></th>    
+    <th style="text-align:center"><h1 id="Home"></h1></th>
+  </tr>
+  <tr>
+    <td style="text-align:center"><h1 id="VisitorRun"></h1></td>
+    <td style="text-align:center">-</td>
+    <td style="text-align:center"><h1 id="HomeRun"></h1></td>
+  </tr>  
+</table>
+</div>
+
+<div style="width: 100%;">
+  <h2 id="GameProgress" style="width: 100%; text-align:center;"></h2>
+</div>
+
+<div>
+<table id="tableInn" style="margin-left:auto; margin-right:auto;" border=1>
+  <tr>
+    <th style="text-align:center;padding: 6px"><h2>Inn</h2></th>
+    <th style="text-align:center;padding: 6px"><h2 >Out</h2></th>    
+    <th style="text-align:center;padding: 6px"><h2>Ball</h2></th>
+    <th style="text-align:center;padding: 6px"><h2>Strike</h2></th>
+  </tr>
+  <tr>
+    <td style="text-align:center;padding: 6px;"><h2 id="Inn"></h2></td>
+    <td style="text-align:center;padding: 6px"><h2 id="Out"></h2></td>
+    <td style="text-align:center;padding: 6px"><h2 id="Ball"></h2></td>
+    <td style="text-align:center;padding: 6px"><h2 id="Strike"></h2></td>
+  </tr>  
+</table>
+</div>
+
+<div style="width: 100%;">
+  <img id="FieldPict" src="" height="200" width="200" style="display: block; margin-left: auto;  margin-right: auto;">
+</div>
+
+<div>
+<table id="tableScore" style="margin-left:auto; margin-right:auto; border-collapse: collapse;" border=1>
+  <tr>
+    <th style="text-align:center;padding: 6px"></th>
+    <th style="text-align:center;padding: 6px"><h3>1</h3></th>    
+    <th style="text-align:center;padding: 6px"><h3>2</h3></th>
+    <th style="text-align:center;padding: 6px"><h3>3</h3></th>
+    <th style="text-align:center;padding: 6px"><h3>4</h3></th>    
+    <th style="text-align:center;padding: 6px"><h3>5</h3></th>
+    <th style="text-align:center;padding: 6px"><h3>6</h3></th>
+  </tr>
+  <tr>
+    <td style="text-align:center;padding: 6px;"><h3 id="Visitor2"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v1"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v2"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v3"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v4"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v5"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="v6"></h3></td>
+  </tr>
+  <tr>
+    <td style="text-align:center;padding: 6px;"><h3 id="Home2"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h1"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h2"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h3"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h4"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h5"></h3></td>
+    <td style="text-align:center;padding: 6px"><h3 id="h6"></h3></td>
+  </tr>  
+</table>
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(getValues);
+
+function getValues() {
+   
+    var queryString = encodeURIComponent('SELECT A, B, C, D, E, F, G');
+    var magicIncantation = '/gviz/tq?gid=' + sheetNumber + '&tq=';
+
+    var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/' +
+        sheetId +
+        magicIncantation + queryString);
+    query.send(handleSampleDataQueryResponse);
+}
+
+function handleSampleDataQueryResponse(response) {
+    
+    if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+
+    var data = response.getDataTable();
+    var visitor=data.getValue(1,0);
+    document.getElementById('Visitor').innerHTML= visitor;
+    document.getElementById('Visitor2').innerHTML= visitor;
+    var home=data.getValue(2,0);
+    document.getElementById('Home').innerHTML= home;  
+    document.getElementById('Home2').innerHTML= home;  
+    
+    var teamColor= {
+          "Astros" : {
+             "Color": "#FFA500"
+          },
+          "As" : {
+             "Color": "green"
+          },
+          "Yankees" : {
+             "Color": "blue"
+          },
+          "Marlins" : {
+             "Color": "red"
+          }
+    };
+
+    var x = document.getElementById("tableResult").getElementsByTagName("th");
+    x[0].style.backgroundColor = teamColor[visitor].Color; 
+    x[2].style.backgroundColor = teamColor[home].Color;
+
+    var x = document.getElementById("tableScore").getElementsByTagName("tr");
+    x[1].style.backgroundColor = teamColor[visitor].Color; 
+    x[2].style.backgroundColor = teamColor[home].Color;  
+
+    var v1=data.getValue(1,1);
+    document.getElementById('v1').innerHTML= v1;
+    var v2=data.getValue(1,2);
+    document.getElementById('v2').innerHTML= v2;
+    var v3=data.getValue(1,3);
+    document.getElementById('v3').innerHTML= v3;
+    var v4=data.getValue(1,4);
+    document.getElementById('v4').innerHTML= v4;
+    var v5=data.getValue(1,5);
+    document.getElementById('v5').innerHTML= v5;
+    var v6=data.getValue(1,6);
+    document.getElementById('v6').innerHTML= v6;
+    document.getElementById('VisitorRun').innerHTML= v1+v2+v3+v4+v5+v6;
+    var h1=data.getValue(2,1);
+    document.getElementById('h1').innerHTML= h1;
+    var h2=data.getValue(2,2);
+    document.getElementById('h2').innerHTML= h2;
+    var h3=data.getValue(2,3);
+    document.getElementById('h3').innerHTML= h3;
+    var h4=data.getValue(2,4);
+    document.getElementById('h4').innerHTML= h4;
+    var h5=data.getValue(2,5);
+    document.getElementById('h5').innerHTML= h5;
+    var h6=data.getValue(2,6);
+    document.getElementById('h6').innerHTML= h6;
+    document.getElementById('HomeRun').innerHTML= h1+h2+h3+h4+h5+h6;
+
+    var gameProgress=data.getValue(11,6);
+    var gameProgressT="Game not started";
+    if(gameProgress == 1)
+    {
+       gameProgressT="Game in Progress";
+    }
+    if(gameProgress == 2)
+    {
+       gameProgressT="Game Finished";
+    }
+    document.getElementById('GameProgress').innerHTML= gameProgressT;
+
+    var inn=data.getValue(4,1);
+    var out=data.getValue(5,1);
+    var ball=data.getValue(6,1);
+    var strike=data.getValue(7,1);
+    document.getElementById('Inn').innerHTML= inn;
+    document.getElementById('Out').innerHTML= out;
+    document.getElementById('Ball').innerHTML= ball;
+    document.getElementById('Strike').innerHTML= strike; 
+
+    var bases= {
+          "000" : {
+             "picture": "https://drive.google.com/uc?id=1-LUM4nQzVWqbzugwqnYI6CAN8MNgbqQw"
+          },
+          "100" : {
+             "picture": "https://drive.google.com/uc?id=1qWiNNHMY2KHflulfW8A59fCfF1baqmis"
+          },
+          "110" : {
+             "picture": "https://drive.google.com/uc?id=1OymwbNiKsiP4dbjOSfLMnCdsXEJ5-U3a"
+          },
+          "101" : {
+             "picture": "https://drive.google.com/uc?id=1r11_U-LUv3djPwu3zXRl_cYNKORGl5xj"
+          },
+          "111" : {
+             "picture": "https://drive.google.com/uc?id=1EGzxS1a6mLC1rr3NMddzLilJ8dZnenRK"
+          },
+          "010" : {
+             "picture": "https://drive.google.com/uc?id=14-eyiFAOip8VjTh4N57ubMwOGt_gZPW8"
+          },
+          "011" : {
+             "picture": "https://drive.google.com/uc?id=124fiQDzuv0BVQtZPpTEwdXUUdhLABjQO"
+          },
+          "001" : {
+             "picture": "https://drive.google.com/uc?id=1FTCc_Ctld325w0TfgW-JmJhSEHzUtNRN"
+          }
+    }; 
+
+    var r1b=data.getValue(8,1);
+    var r2b=data.getValue(9,1);
+    var r3b=data.getValue(10,1);
+    var rpict="";
+    rpict=rpict.concat(r1b,r2b,r3b);
+    document.getElementById('FieldPict').src= bases[rpict].picture;    
+    
+    if(gameProgress == 1)
+    {
+       setTimeout(getValues, 6000);
+    }
+}
+
+</script>
