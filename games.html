@@ -13,7 +13,6 @@ function getParameterByName(name, url) {
 var sheetId = getParameterByName('sheetId');  
 var sheetNumber = getParameterByName('sheetNumber');  
 
-
 </script>
 
 <div>
@@ -29,31 +28,6 @@ var sheetNumber = getParameterByName('sheetNumber');
     <td style="text-align:center"><h1 id="HomeRun"></h1></td>
   </tr>  
 </table>
-</div>
-
-<div style="width: 100%;">
-  <h2 id="GameProgress" style="width: 100%; text-align:center;"></h2>
-</div>
-
-<div>
-<table id="tableInn" style="margin-left:auto; margin-right:auto;" border=1>
-  <tr>
-    <th style="text-align:center;padding: 6px"><h2>Inn</h2></th>
-    <th style="text-align:center;padding: 6px"><h2 >Out</h2></th>    
-    <th style="text-align:center;padding: 6px"><h2>Ball</h2></th>
-    <th style="text-align:center;padding: 6px"><h2>Strike</h2></th>
-  </tr>
-  <tr>
-    <td style="text-align:center;padding: 6px;"><h2 id="Inn"></h2></td>
-    <td style="text-align:center;padding: 6px"><h2 id="Out"></h2></td>
-    <td style="text-align:center;padding: 6px"><h2 id="Ball"></h2></td>
-    <td style="text-align:center;padding: 6px"><h2 id="Strike"></h2></td>
-  </tr>  
-</table>
-</div>
-
-<div style="width: 100%;">
-  <img id="FieldPict" src="" height="200" width="200" style="display: block; margin-left: auto;  margin-right: auto;">
 </div>
 
 <div>
@@ -172,65 +146,6 @@ function handleSampleDataQueryResponse(response) {
     document.getElementById('h6').innerHTML= h6;
     document.getElementById('HomeRun').innerHTML= h1+h2+h3+h4+h5+h6;
 
-    var gameProgress=data.getValue(11,6);
-    var gameProgressT="Game not started";
-    if(gameProgress == 1)
-    {
-       gameProgressT="Game in Progress";
-    }
-    if(gameProgress == 2)
-    {
-       gameProgressT="Game Finished";
-    }
-    document.getElementById('GameProgress').innerHTML= gameProgressT;
-
-    var inn=data.getValue(4,1);
-    var out=data.getValue(5,1);
-    var ball=data.getValue(6,1);
-    var strike=data.getValue(7,1);
-    document.getElementById('Inn').innerHTML= inn;
-    document.getElementById('Out').innerHTML= out;
-    document.getElementById('Ball').innerHTML= ball;
-    document.getElementById('Strike').innerHTML= strike; 
-
-    var bases= {
-          "000" : {
-             "picture": "https://drive.google.com/uc?id=1-LUM4nQzVWqbzugwqnYI6CAN8MNgbqQw"
-          },
-          "100" : {
-             "picture": "https://drive.google.com/uc?id=1qWiNNHMY2KHflulfW8A59fCfF1baqmis"
-          },
-          "110" : {
-             "picture": "https://drive.google.com/uc?id=1OymwbNiKsiP4dbjOSfLMnCdsXEJ5-U3a"
-          },
-          "101" : {
-             "picture": "https://drive.google.com/uc?id=1r11_U-LUv3djPwu3zXRl_cYNKORGl5xj"
-          },
-          "111" : {
-             "picture": "https://drive.google.com/uc?id=1EGzxS1a6mLC1rr3NMddzLilJ8dZnenRK"
-          },
-          "010" : {
-             "picture": "https://drive.google.com/uc?id=14-eyiFAOip8VjTh4N57ubMwOGt_gZPW8"
-          },
-          "011" : {
-             "picture": "https://drive.google.com/uc?id=124fiQDzuv0BVQtZPpTEwdXUUdhLABjQO"
-          },
-          "001" : {
-             "picture": "https://drive.google.com/uc?id=1FTCc_Ctld325w0TfgW-JmJhSEHzUtNRN"
-          }
-    }; 
-
-    var r1b=data.getValue(8,1);
-    var r2b=data.getValue(9,1);
-    var r3b=data.getValue(10,1);
-    var rpict="";
-    rpict=rpict.concat(r1b,r2b,r3b);
-    document.getElementById('FieldPict').src= bases[rpict].picture;    
-    
-    if(gameProgress == 1)
-    {
-       setTimeout(getValues, 6000);
-    }
 }
 
 </script>
